@@ -1,0 +1,32 @@
+version: '3.7'
+
+services:
+
+  redis-rdb:
+    container_name: redis-rdb
+    image: redis:6-alpine
+    volumes:
+      - ./redis/redis-rdb/redis.conf:/usr/local/etc/redis/redis.conf
+    ports:
+      - "6380:6379"
+
+
+  redis-aof:
+    container_name: redis-aof
+    image: redis:6-alpine
+    volumes:
+      - ./redis/redis-aof/redis.conf:/usr/local/etc/redis/redis.conf
+    ports:
+      - "6381:6379"
+
+  beanstalkd:
+    container_name: beanstalkd
+    command: -b /usr/local/bin
+    image: schickling/beanstalkd
+    restart: "no"
+    ports:
+      - "11300:11300"
+    expose:
+      - "11300"
+
+
